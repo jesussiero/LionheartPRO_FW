@@ -1,0 +1,40 @@
+HOW TO PROGRAM BOOTLOADER
+
+English:
+To program the bootloader, it is recommended to follow the steps below:
+
+1. **Install AVRDUDE**: AVRDUDE is required. On Windows, AVRDUDE is installed using WinAVR (Install WinAVR on the PC from which you will use the AVRisp MKii programmer). [Download WinAVR](http://sourceforge.net/projects/winavr/).
+
+2. **Download the Bootloader**: [Download the bootloader](http://blog.lincomatic.com/wp-content/uploads/2012/03/BootloaderCDC.zip). It is advisable to create a folder at C:\Users\User\BootloaderCDC and place the BootloaderCDC.hex file here.
+
+3. **Command Line Instructions**: Using the Windows command line (cmd.exe), execute the following commands. Navigate to the directory where the .hex file is located or change the Windows environment variable so that AVRDUDE can see the directory where the bootloader is located:
+
+    - `avrdude -c avrisp2 -P usb -p at90usb1286 -B 3 –v`: This command can be used to check that everything is working fine (as a test).
+    
+    - `avrdude -c avrisp2 -P usb -p at90usb1286 -B 3 -U flash:w:BootloaderCDC.hex:i`: This command is used to transfer the bootloader to the MCU.
+    
+    - `avrdude -c avrisp2 -P usb -p at90usb1286 -B 3 -U lfuse:w:0xde:m -U hfuse:w:0xdb:m -U efuse:w:0xf0:m`: This command sets the fuse bits of the microcontroller properly for everything to work well.
+
+Step A is optional, while steps B and C are mandatory (it is recommended to follow this order). If everything goes well, the bootloader will have been transferred, and Arduino will recognize the board. Please note that an incorrect value of the fuses can brick the microcontroller, so it is strongly advised to use the fuse values described above and not others.
+
+
+Spanish:
+Para programar el bootloader se recomienda seguir los siguientes pasos:
+
+1.- Se necesita AVRDUDE. En Windows AVRDUDE se instala mediante WinAVR (Instalar WinAVR en el PC desde el que vayas a utilizar el programador AVRisp MKii)
+http://sourceforge.net/projects/winavr/
+
+2.- Descargar el bootloader: http://blog.lincomatic.com/wp-content/uploads/2012/03/BootloaderCDC.zip
+
+3.- Es recomendable crear una carpeta en C:\Users\User\BootloaderCDC y dejar aquí el fichero BootloaderCDC.hex
+
+4.- Desde la línea de comandos de Windows (cmd.exe) los comandos a emplear son los siguientes. Meterse en el directorio donde está el .hex o cambiar la variable de entorno de Windows para que AVRDUDE vea el directorio donde está el bootloader:
+
+avrdude -c avrisp2 -P usb -p at90usb1286 -B 3 –v
+Este se puede emplear para chequear que todo va bien (a modo de test)
+avrdude -c avrisp2 -P usb -p at90usb1286 -B 3 -U flash:w:BootloaderCDC.hex:i
+Este sirve para trasnferir el bootloader al MCU
+avrdude -c avrisp2 -P usb -p at90usb1286 -B 3 -U lfuse:w:0xde:m -U hfuse:w:0xdb:m -U efuse:w:0xf0:m
+Este comando pone los fuse bits del micro como es debido para que todo funcione bien.
+
+El paso A es opcional, los pasos B y C son obligatorios (se recomienda emplear este orden). Si todo va bien el bootloader habrá sido transferido y Arduino reconocerá la placa. Tener en cuenta que un valor incorrecto de los fusibles puede brickear el microcontrolador, así que se ruega encarecidamente emplear los valores de los fusibles anteriormente descritos y no otros.
